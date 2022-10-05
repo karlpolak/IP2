@@ -1,0 +1,2 @@
+include dyntapy/toy_networks/*.tntp
+include LICENSE.txt
