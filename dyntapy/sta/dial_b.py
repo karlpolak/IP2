@@ -41,7 +41,7 @@ gap_definition = (
 
 
 @njit
-def dial_b(network: Network, demand: InternalStaticDemand, store_iterations):
+def dial_b(network: Network, demand: InternalStaticDemand, store_iterations, tolls):
     gaps = []
     from_nodes = network.links.from_node
     to_nodes = network.links.to_node
@@ -51,7 +51,7 @@ def dial_b(network: Network, demand: InternalStaticDemand, store_iterations):
     )
     costs = __bpr_cost(
         capacities=network.links.capacity, ff_tts=link_ff_times, flows=flows
-    )
+    ) + tolls # TODO fix tolls
     derivatives = __bpr_derivative(
         flows=flows, capacities=network.links.capacity, ff_tts=link_ff_times
     )
