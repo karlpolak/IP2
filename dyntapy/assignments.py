@@ -308,7 +308,7 @@ class StaticAssignment:
             )
         elif method == "msa":
             costs, flows, gap_definition, gap = msa_flow_averaging(
-                self.internal_network, self.internal_demand, store_iterations
+                self.tolls, self.internal_network, self.internal_demand, store_iterations
             )
             result = StaticResult(
                 costs,

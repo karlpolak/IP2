@@ -47,7 +47,7 @@ def dial_b(network: Network, demand: InternalStaticDemand, store_iterations, tol
     to_nodes = network.links.to_node
     link_ff_times = network.links.length / network.links.free_speed
     flows, bush_flows, topological_orders, links_in_bush = __initial_loading(
-        network, demand
+        network, demand, tolls
     )
     costs = __bpr_cost(
         capacities=network.links.capacity, ff_tts=link_ff_times, flows=flows
@@ -315,7 +315,7 @@ def topological_sort(forward_star, backward_star, tot_nodes, origin):
 
 
 @njit()
-def __initial_loading(network: Network, demand: InternalStaticDemand):
+def __initial_loading(network: Network, demand: InternalStaticDemand, tolls):
     tot_links = network.tot_links
     link_capacities = network.links.capacity
     link_ff_times = network.links.length / network.links.free_speed
@@ -336,7 +336,7 @@ def __initial_loading(network: Network, demand: InternalStaticDemand):
         bush_flows[origin_id] = np.zeros(tot_links)
         costs = __bpr_cost(
             capacities=link_capacities, ff_tts=link_ff_times, flows=flows
-        )
+        ) + tolls
         destinations = demand.to_destinations.get_nnz(origin)
         demands = demand.to_destinations.get_row(origin)
         distances, pred = dijkstra_all(
