@@ -219,7 +219,7 @@ class StaticAssignment:
 
     """
 
-    def __init__(self, g, od_graph):
+    def __init__(self, g, od_graph, tolls):
         self.internal_network = build_network(g)
         log("network build")
         self.network = g
@@ -227,6 +227,7 @@ class StaticAssignment:
         self.internal_demand = build_internal_static_demand(od_graph)
         self.result = None
         self.iterations = None
+        self.tolls = tolls
         log("Assignment object initialized!")
         print("init passed successfully")
 
@@ -292,8 +293,8 @@ class StaticAssignment:
         # multi-commodity (origin, destination or origin-destination)
         if method == "dial_b":
             costs, origin_flows, gap_definition, gap = dial_b(
-                self.internal_network, self.internal_demand, store_iterations
-            )
+                self.internal_network, self.internal_demand, store_iterations, self.tolls
+            ) # TODO fix tolls
             flows = np.sum(origin_flows, axis=0)
             result = StaticResult(
                 costs,
@@ -307,7 +308,7 @@ class StaticAssignment:
             )
         elif method == "msa":
             costs, flows, gap_definition, gap = msa_flow_averaging(
-                self.internal_network, self.internal_demand, store_iterations
+                self.tolls, self.internal_network, self.internal_demand, store_iterations
             )
             result = StaticResult(
                 costs,
