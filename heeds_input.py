@@ -1,19 +1,15 @@
 from pickle import load 
 import numpy as np
-import geopandas as gpd
-import pandas as pd
 import os
-from dyntapy.demand_data import od_graph_from_matrix
-from pyproj import Proj, transform
 from dyntapy.assignments import StaticAssignment
+from dyntapy.visualization import show_network, show_demand
 import warnings
 warnings.filterwarnings('ignore') # hide warnings
 
-# INPUT FROM HEEDS 
+# INPUT FROM HEEDS: TOLL VALUE?  
 toll_value = 0
-
-# Link we decided to toll
-toll_id = 1490
+# LINK(S) THAT WE WOULD LIKE TO TOLL
+toll_ids = [1490]
 
 # FILL THIS IN ACCORDING TO YOUR NEEDS
 city = 'BRUSSEL'
@@ -23,33 +19,26 @@ buffer_N = 3
 # SPECIFY THE PATHS 
 buffer = str(buffer_N)
 HERE = os.path.dirname(os.path.realpath("__file__"))
-data_path = HERE + os.path.sep +'STA_prep'
-zoning_path = data_path + os.path.sep + "shapefile_data" + os.path.sep + city + "_" + buffer+ "_10" + os.path.sep + city + "_" + buffer+ "_10.shp"
-network_path = data_path + os.path.sep + 'network_data' + os.path.sep + city + "_" + buffer + '_centroids'
-od_path = data_path + os.path.sep + "od_matrix_data_ext_tr" + os.path.sep + city + "_ext_tr_" + buffer + "_9_10.xlsx"
+data_path = HERE + os.path.sep +'HEEDS_prep'
+network_path = data_path + os.path.sep + 'network_centroids_data' + os.path.sep + city + "_" + buffer + '_centroids'
+graph_path = HERE + os.path.sep +'HEEDS_prep' + os.path.sep + "od_graph_data" + os.path.sep + city + "_ext_tr_" + buffer + "_9_10"
 
 # LOAD NETWORK FILE
 with open(network_path, 'rb') as network_file:
     g = load(network_file)
     print(f'network loaded from f{network_path}')
 
-# LOAD OD-MATRIX
-od = pd.read_excel(od_path)
-od_array = od.to_numpy() # The OD matrix is now stored in a numpy array
+# LOAD OD-GRAPH
+with open(graph_path, 'rb') as f:
+    od_graph = load(f)
+    print(f'od_graph loaded from f{graph_path}')
 
-# LOAD THE CENTROIDS
-zoning = gpd.read_file(zoning_path) 
-x_lamb, y_lamb = zoning["X_LAMB"], zoning["Y_LAMB"]
-x_lamb, y_lamb = x_lamb.to_numpy(), y_lamb.to_numpy()
-inProj, outProj = Proj(init='epsg:31370'), Proj(init='epsg:4326')
-x_centroids, y_centroids = transform(inProj,outProj,x_lamb,y_lamb)
-
-# CREATE OD-GRAPH
-od_graph = od_graph_from_matrix(od_array,x_centroids,y_centroids)
+# COMPUTE TOLL STRUCTURE BASED ON INPUT
+tolls = np.zeros(g.number_of_edges())
+for elem in toll_ids:
+    tolls[elem] = toll_value
 
 # DO ASSIGNMENT 
-tolls = np.zeros(g.number_of_edges())
-tolls[toll_id] = toll_value
 assignment = StaticAssignment(g,od_graph, tolls)
 methods = ['dial_b']
 for method in methods:
