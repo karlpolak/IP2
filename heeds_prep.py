@@ -7,6 +7,7 @@ import geopandas as gpd
 import pandas as pd
 from dyntapy.supply_data import road_network_from_place, relabel_graph
 from dyntapy.demand_data import add_centroids, od_graph_from_matrix
+from dyntapy.visualization import show_network
 from pyproj import Proj, transform
 from pickle import dump
 warnings.filterwarnings('ignore') # hide warnings
@@ -52,3 +53,7 @@ with open(graph_path, 'wb') as f:
     dump(od_graph,f)
     print(f'od_graph saved at f{od_path}')
 
+
+# To decide which links we want to toll, we need to visualize the network so we can see which link_id is where.
+# Preferably, we would do an initial STA with 0 toll to see which link is problematic and try to toll that one! 
+show_network(g)
