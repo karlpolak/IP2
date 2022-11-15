@@ -3,7 +3,6 @@ import numpy as np
 import geopandas as gpd
 import pandas as pd
 import os
-from dyntapy.visualization import show_network
 from dyntapy.demand_data import od_graph_from_matrix
 from pyproj import Proj, transform
 from dyntapy.assignments import StaticAssignment
@@ -33,7 +32,6 @@ od_path = data_path + os.path.sep + "od_matrix_data_ext_tr" + os.path.sep + city
 with open(network_path, 'rb') as network_file:
     g = load(network_file)
     print(f'network loaded from f{network_path}')
-show_network(g)
 
 # LOAD OD-MATRIX
 od = pd.read_excel(od_path)
@@ -61,6 +59,6 @@ for method in methods:
 print(result.__dict__.keys())
 
 # OBJECTIVE VALUE = OUTPUT
-
-objective_value = result.link_costs * result.link_flows
-
+veh_hour_per_link = result.link_costs * result.flows
+objective = sum(veh_hour_per_link)
+print(objective)
