@@ -55,10 +55,10 @@ def road_network_from_place(
         name of the city or region
     buffer_dist_close : float
         meters to buffer around, retain all roads with 'highway' = {'trunk', 'motorway',
-        'primary'}
+        'primary','secondary'}
     buffer_dist_extended: float
-        meters to buffer around, retain all roads with 'highway' = {'trunk', 'motorway',
-        }
+        meters to buffer around, retain all roads with 'highway' = {'trunk', 'motorway', 
+        'primary', 'secondary'}
 
 
     Notes

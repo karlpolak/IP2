@@ -45,9 +45,9 @@ class _Supply:
     node_control_default = np.uint8(0)
     default_access = ""
     close_surroundings_filter = (
-        # exclude everything but highway:[trunk, motorway, primary]
+        # exclude everything but highway:[trunk, motorway, primary, secondary_link, secondary]
         '["highway"]["area"!~"yes"]["access"!~"private"]'
-        '["highway"!~"residential|secondary_link|tertiary_link|secondary|tertiary|'
+        '["highway"!~"residential|tertiary_link|tertiary|'
         "unclassified|abandoned|bridleway|construction|corridor|cycleway|elevator|"
         "escalator|footway|path|pedestrian|planned|platform|proposed|raceway|service|"
         'steps|track|living_street|bus_guideway|escape|raceway|road|busway"]'
@@ -55,9 +55,9 @@ class _Supply:
         '["service"!~"alley|driveway|emergency_access|parking|parking_aisle|private"]'
     )
     extended_surroundings_filter = (
-        # exclude everything but highway:[trunk, motorway]
+        # exclude everything but highway:[trunk, motorway, primary, secondary_link, secondary]
         '["highway"]["area"!~"yes"]["access"!~"private"]'
-        '["highway"!~"residential|primary|secondary_link|tertiary_link|secondary|'
+        '["highway"!~"residential|tertiary_link|'
         "tertiary|unclassified|abandoned|bridleway|"
         "construction|corridor|cycleway|elevator|"
         "escalator|footway|path|pedestrian|planned|platform|proposed|raceway|service|"
