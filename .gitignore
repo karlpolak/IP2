@@ -9,7 +9,6 @@ STA_prep/Verplaatsingen_bestuurder_uur_spmVlaanderenVersie4.2.2_2017.CSV
 # data and plotting files
 demand_plot_*
 network_plot_*
-*.html
 # *_road_network*
 *.pickle
 # some local folders related to dyntapy itself
