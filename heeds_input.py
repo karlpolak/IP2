@@ -2,7 +2,6 @@ from pickle import load
 import numpy as np
 import os
 from dyntapy.assignments import StaticAssignment
-from dyntapy.visualization import show_network, show_demand
 import warnings
 warnings.filterwarnings('ignore') # hide warnings
 
@@ -43,7 +42,6 @@ assignment = StaticAssignment(g,od_graph, tolls)
 methods = ['dial_b']
 for method in methods:
     result = assignment.run(method)
-    show_network(g, flows = result.flows, notebook=True, show_nodes=False)
     print(f'{method=} ran successfully')
 print(result.__dict__.keys())
 
