@@ -51,7 +51,7 @@ od_array = od.to_numpy() # The OD matrix is now stored in a numpy array
 od_graph = od_graph_from_matrix(od_array, x_centroids, y_centroids) 
 with open(graph_path, 'wb') as f:
     dump(od_graph,f)
-    print(f'od_graph saved at f{od_path}')
+    print(f'od_graph saved at f{graph_path}')
 
 
 # To decide which links we want to toll, we need to visualize the network so we can see which link_id is where.
