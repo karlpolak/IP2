@@ -11,8 +11,8 @@ toll_value = 0
 toll_ids = [1490]
 
 # FILL THIS IN ACCORDING TO YOUR NEEDS
-city = 'BRUSSEL'
-buffer_N = 3
+city = 'LEUVEN'
+buffer_N = 2
 # buffer_transit = "45"
 
 # SPECIFY THE PATHS 
