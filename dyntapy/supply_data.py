@@ -671,7 +671,21 @@ def get_toy_network(name):
     """
 
     g = nx.DiGraph()
-    if name == "cascetta":
+    if name == "two-route":
+        ebunch_of_nodes = [
+            (1, {"x_coord": 0, "y_coord": 2}),
+            (2, {"x_coord": 1, "y_coord": 1.5}),
+            (3, {"x_coord": 1, "y_coord": 2.5}),
+            (4, {"x_coord": 2, "y_coord": 2}),
+        ]
+        ebunch_of_edges = [
+            (1,2),(1,3),(2,4),(3,4),
+        ]
+        g.add_nodes_from(ebunch_of_nodes)
+        g.add_edges_from(ebunch_of_edges)
+        bottle_neck_edges = [(1,2),(1,3),(2,4),(3,4)]
+        _set_toy_network_attributes(g,bottle_neck_edges)
+    elif name == "cascetta":
         ebunch_of_nodes = [
             (1, {"x_coord": 2, "y_coord": np.sqrt(2)}),
             (2, {"x_coord": np.sqrt(2) + 2, "y_coord": 2 * np.sqrt(2)}),
