@@ -1,6 +1,5 @@
 from pickle import load 
 import numpy as np
-import os
 from dyntapy.assignments import StaticAssignment
 import warnings
 warnings.filterwarnings('ignore') # hide warnings
@@ -15,12 +14,9 @@ city = 'LEUVEN'
 buffer_N = 2
 # buffer_transit = "45"
 
-# SPECIFY THE PATHS 
-buffer = str(buffer_N)
-HERE = os.path.dirname(os.path.realpath("__file__"))
-data_path = HERE + os.path.sep +'HEEDS_prep'
-network_path = data_path + os.path.sep + 'network_centroids_data' + os.path.sep + city + "_" + buffer + '_centroids'
-graph_path = HERE + os.path.sep +'HEEDS_prep' + os.path.sep + "od_graph_data" + os.path.sep + city + "_ext_tr_" + buffer + "_9_10"
+# SPECIFY THE HARDCODED PATHS 
+network_path = "C:/Users/anton/IP2/HEEDS_prep/network_centroids_data/LEUVEN_2_centroids"
+graph_path = "C:/Users/anton/IP2/HEEDS_prep/od_graph_data/LEUVEN_ext_tr_2_9_10"
 
 # LOAD NETWORK FILE
 with open(network_path, 'rb') as network_file:
