@@ -294,7 +294,7 @@ class StaticAssignment:
         if method == "dial_b":
             costs, origin_flows, gap_definition, gap = dial_b(
                 self.internal_network, self.internal_demand, store_iterations, self.tolls
-            ) # TODO fix tolls
+            )
             flows = np.sum(origin_flows, axis=0)
             result = StaticResult(
                 costs,

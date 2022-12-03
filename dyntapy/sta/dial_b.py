@@ -51,7 +51,7 @@ def dial_b(network: Network, demand: InternalStaticDemand, store_iterations, tol
     )
     costs = __bpr_cost(
         capacities=network.links.capacity, ff_tts=link_ff_times, flows=flows
-    ) + tolls # TODO fix tolls
+    ) + tolls
     derivatives = __bpr_derivative(
         flows=flows, capacities=network.links.capacity, ff_tts=link_ff_times
     )
