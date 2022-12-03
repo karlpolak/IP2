@@ -7,7 +7,7 @@ warnings.filterwarnings('ignore') # hide warnings
 # INPUT FROM HEEDS: TOLL VALUE?  
 toll_value = 0
 # LINK(S) THAT WE WOULD LIKE TO TOLL
-toll_ids = [1490]
+toll_ids = [163]
 
 # SPECIFY THE HARDCODED PATHS 
 network_path = "C:/Users/anton/IP2/HEEDS_prep/network_centroids_data/Leuven_2_centroids"
