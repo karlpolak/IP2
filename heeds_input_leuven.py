@@ -9,14 +9,9 @@ toll_value = 0
 # LINK(S) THAT WE WOULD LIKE TO TOLL
 toll_ids = [1490]
 
-# FILL THIS IN ACCORDING TO YOUR NEEDS
-city = 'LEUVEN'
-buffer_N = 2
-# buffer_transit = "45"
-
 # SPECIFY THE HARDCODED PATHS 
-network_path = "C:/Users/anton/IP2/HEEDS_prep/network_centroids_data/LEUVEN_2_centroids"
-graph_path = "C:/Users/anton/IP2/HEEDS_prep/od_graph_data/LEUVEN_ext_tr_2_9_10"
+network_path = "C:/Users/anton/IP2/HEEDS_prep/network_centroids_data/Leuven_2_centroids"
+graph_path = "C:/Users/anton/IP2/HEEDS_prep/od_graph_data/Leuven_ext_tr_2_9_10"
 
 # LOAD NETWORK FILE
 with open(network_path, 'rb') as network_file:
