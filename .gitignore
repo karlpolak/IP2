@@ -169,3 +169,18 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+STA_prep/shapefile_data/radius_20.dbf
+STA_prep/shapefile_data/radius_20.cpg
+STA_prep/shapefile_data/radius_20.prj
+STA_prep/shapefile_data/radius_20.shp
+STA_prep/shapefile_data/radius_20.shx
+STA_prep/shapefile_data/radius_30.cpg
+STA_prep/shapefile_data/radius_30.dbf
+STA_prep/shapefile_data/radius_30.prj
+STA_prep/shapefile_data/radius_30.shp
+STA_prep/shapefile_data/radius_30.shx
+STA_prep/shapefile_data/radius_40.cpg
+STA_prep/shapefile_data/radius_40.prj
+STA_prep/shapefile_data/radius_40.dbf
+STA_prep/shapefile_data/radius_40.shp
+STA_prep/shapefile_data/radius_40.shx
