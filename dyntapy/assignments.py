@@ -216,10 +216,9 @@ class StaticAssignment:
         'y_coord'. For each OD pair with a non-zero demand there
         is a link with a corresponding 'flow' element.
 
-
     """
 
-    def __init__(self, g, od_graph, tolls):
+    def __init__(self, g, od_graph, tolls, zonal = False):
         self.internal_network = build_network(g)
         log("network build")
         self.network = g
@@ -228,6 +227,7 @@ class StaticAssignment:
         self.result = None
         self.iterations = None
         self.tolls = tolls
+        self.zonal = zonal
         log("Assignment object initialized!")
         print("init passed successfully")
 
@@ -293,7 +293,7 @@ class StaticAssignment:
         # multi-commodity (origin, destination or origin-destination)
         if method == "dial_b":
             costs, origin_flows, gap_definition, gap = dial_b(
-                self.internal_network, self.internal_demand, store_iterations, self.tolls
+                self.internal_network, self.internal_demand, store_iterations, self.tolls, self.zonal
             )
             flows = np.sum(origin_flows, axis=0)
             result = StaticResult(

@@ -41,17 +41,23 @@ gap_definition = (
 
 
 @njit
-def dial_b(network: Network, demand: InternalStaticDemand, store_iterations, tolls):
+def dial_b(network: Network, demand: InternalStaticDemand, store_iterations, tolls, zonal):
     gaps = []
     from_nodes = network.links.from_node
     to_nodes = network.links.to_node
     link_ff_times = network.links.length / network.links.free_speed
+    print("initial loading starts ")
     flows, bush_flows, topological_orders, links_in_bush = __initial_loading(
-        network, demand, tolls
+        network, demand, tolls, zonal
     )
-    costs = __bpr_cost(
-        capacities=network.links.capacity, ff_tts=link_ff_times, flows=flows
-    ) + tolls
+    print("initial loading passed successfully")
+    if zonal is True:
+        print("zonal cost calculation")
+        costs = __bpr_cost(capacities=network.links.capacity, ff_tts=link_ff_times, flows=flows) + network.links.length * tolls
+    else: 
+        print("cordon cost calculation")
+        costs = __bpr_cost(capacities=network.links.capacity, ff_tts=link_ff_times, flows=flows) + tolls
+
     derivatives = __bpr_derivative(
         flows=flows, capacities=network.links.capacity, ff_tts=link_ff_times
     )
@@ -315,7 +321,7 @@ def topological_sort(forward_star, backward_star, tot_nodes, origin):
 
 
 @njit()
-def __initial_loading(network: Network, demand: InternalStaticDemand, tolls):
+def __initial_loading(network: Network, demand: InternalStaticDemand, tolls, zonal):
     tot_links = network.tot_links
     link_capacities = network.links.capacity
     link_ff_times = network.links.length / network.links.free_speed
@@ -334,9 +340,12 @@ def __initial_loading(network: Network, demand: InternalStaticDemand, tolls):
     for origin_id in prange(demand.to_destinations.get_nnz_rows().size):
         origin = demand.to_destinations.get_nnz_rows()[origin_id]
         bush_flows[origin_id] = np.zeros(tot_links)
-        costs = __bpr_cost(
-            capacities=link_capacities, ff_tts=link_ff_times, flows=flows
-        ) + tolls
+        
+        if zonal is True:
+            costs = __bpr_cost(capacities=network.links.capacity, ff_tts=link_ff_times, flows=flows) + network.links.length * tolls
+        else: 
+            costs = __bpr_cost(capacities=network.links.capacity, ff_tts=link_ff_times, flows=flows) + tolls
+        
         destinations = demand.to_destinations.get_nnz(origin)
         demands = demand.to_destinations.get_row(origin)
         distances, pred = dijkstra_all(
