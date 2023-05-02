@@ -94,6 +94,7 @@ from dyntapy.sta.uncongested_dial import sun
 from dyntapy.supply_data import build_network
 from dyntapy.utilities import log
 from dyntapy.results import StaticResult, get_skim, DynamicResult
+from dyntapy.toll import Toll
 
 
 class DynamicAssignment:
@@ -219,7 +220,7 @@ class StaticAssignment:
 
     """
 
-    def __init__(self, g, od_graph, tolls):
+    def __init__(self, g, od_graph, toll_object=None):
         self.internal_network = build_network(g)
         log("network build")
         self.network = g
@@ -227,7 +228,12 @@ class StaticAssignment:
         self.internal_demand = build_internal_static_demand(od_graph)
         self.result = None
         self.iterations = None
-        self.tolls = tolls
+        
+        if toll_object:
+            self.tolls = toll_object.get_toll_costs()
+        else: 
+            self.tolls = None
+
         log("Assignment object initialized!")
         print("init passed successfully")
 

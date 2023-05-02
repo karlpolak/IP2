@@ -41,7 +41,7 @@ gap_definition = (
 
 
 @njit
-def dial_b(network: Network, demand: InternalStaticDemand, store_iterations, tolls):
+def dial_b(network: Network, demand: InternalStaticDemand, store_iterations, tolls=None):
     gaps = []
     from_nodes = network.links.from_node
     to_nodes = network.links.to_node
@@ -49,9 +49,10 @@ def dial_b(network: Network, demand: InternalStaticDemand, store_iterations, tol
     flows, bush_flows, topological_orders, links_in_bush = __initial_loading(
         network, demand, tolls
     )
-    costs = __bpr_cost(
-        capacities=network.links.capacity, ff_tts=link_ff_times, flows=flows
-    ) + tolls
+    if tolls != None:
+        costs = __bpr_cost(capacities=network.links.capacity, ff_tts=link_ff_times, flows=flows) + tolls
+    else: 
+        costs = __bpr_cost(capacities=network.links.capacity, ff_tts=link_ff_times, flows=flows)
     derivatives = __bpr_derivative(
         flows=flows, capacities=network.links.capacity, ff_tts=link_ff_times
     )
@@ -334,9 +335,10 @@ def __initial_loading(network: Network, demand: InternalStaticDemand, tolls):
     for origin_id in prange(demand.to_destinations.get_nnz_rows().size):
         origin = demand.to_destinations.get_nnz_rows()[origin_id]
         bush_flows[origin_id] = np.zeros(tot_links)
-        costs = __bpr_cost(
-            capacities=link_capacities, ff_tts=link_ff_times, flows=flows
-        ) + tolls
+        if tolls != None:
+            costs = __bpr_cost(capacities=link_capacities, ff_tts=link_ff_times, flows=flows) + tolls
+        else: 
+            costs = __bpr_cost(capacities=link_capacities, ff_tts=link_ff_times, flows=flows)
         destinations = demand.to_destinations.get_nnz(origin)
         demands = demand.to_destinations.get_row(origin)
         distances, pred = dijkstra_all(
