@@ -298,7 +298,7 @@ class StaticAssignment:
         # multi-commodity (origin, destination or origin-destination)
         if method == "dial_b":
             costs, origin_flows, gap_definition, gap = dial_b(
-                self.internal_network, self.internal_demand, store_iterations, self.tolls, self.zonal
+                self.internal_network, self.internal_demand, store_iterations, self.tolls
             )
             flows = np.sum(origin_flows, axis=0)
             result = StaticResult(

@@ -1,6 +1,7 @@
 import warnings
 warnings.filterwarnings('ignore') # hide warnings
-import numpy as np
+import sys
+sys.path.append("../../..")
 from pickle import load
 from dyntapy.assignments import StaticAssignment
 from dyntapy.toll import create_toll_object
@@ -12,14 +13,12 @@ toll_ids = [2]
 toll_method = 'single'
 
 # Retrieve network and od-graph
-network_path = "C:/Users/anton/IP2/HEEDS_prep/network_centroids_data/two_route"
-graph_path = "C:/Users/anton/IP2/HEEDS_prep/od_graph_data/two_route"
+network_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/network_with_centroids/inelastic_toy"
+graph_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/od_graph/inelastic_toy"
 with open(network_path, 'rb') as network_file:
     g = load(network_file)
-    print(f'network saved at f{network_path}')
 with open(graph_path, 'rb') as f:
     od_graph = load(f)
-    print(f'od_graph saved at f{graph_path}')
 
 # Create toll object
 toll_object = create_toll_object(g, toll_method, toll_ids, toll_value)

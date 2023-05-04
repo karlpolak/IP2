@@ -1,7 +1,8 @@
 from pickle import load 
-import numpy as np
-import os
+import sys
+sys.path.append("../../..")
 from dyntapy.assignments import StaticAssignment
+from dyntapy.toll import create_toll_object
 import warnings
 warnings.filterwarnings('ignore') # hide warnings
 
@@ -9,15 +10,16 @@ warnings.filterwarnings('ignore') # hide warnings
 toll_value = 0
 # LINK(S) THAT WE WOULD LIKE TO TOLL
 toll_ids = [1490]
+# TOLL METHOD: single link/zone/cordon
+toll_method = 'single'
 
 # FILL THIS IN ACCORDING TO YOUR NEEDS
 city = 'BRUSSEL'
-buffer_N = 3
-# buffer_transit = "45"
+buffer = 40
 
 # SPECIFY THE HARDCODED PATHS 
-network_path = "C:/Users/anton/IP2/HEEDS_prep/network_centroids_data/BRUSSEL_3_centroids"
-graph_path = "C:/Users/anton/IP2/HEEDS_prep/od_graph_data/BRUSSEL_ext_tr_3_9_10"
+network_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/network_with_centroids/inelastic_BRUSSEL_40"
+graph_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/od_graph/inelastic_BRUSSEL_40"
 
 # LOAD NETWORK FILE
 with open(network_path, 'rb') as network_file:
@@ -29,13 +31,11 @@ with open(graph_path, 'rb') as f:
     od_graph = load(f)
     print(f'od_graph loaded from f{graph_path}')
 
-# COMPUTE TOLL STRUCTURE BASED ON INPUT
-tolls = np.zeros(g.number_of_edges())
-for elem in toll_ids:
-    tolls[elem] = toll_value
+# CREATE TOLL OBJECT
+toll_object = create_toll_object(g, toll_method, toll_ids, toll_value)
 
 # DO ASSIGNMENT 
-assignment = StaticAssignment(g,od_graph, tolls)
+assignment = StaticAssignment(g,od_graph, toll_object)
 result = assignment.run('dial_b')
 
 # OBJECTIVE VALUE = OUTPUT
