@@ -41,11 +41,14 @@ gap_definition = (
 
 
 @njit
+
 def dial_b(network: Network, demand: InternalStaticDemand, store_iterations, tolls=None):
+
     gaps = []
     from_nodes = network.links.from_node
     to_nodes = network.links.to_node
     link_ff_times = network.links.length / network.links.free_speed
+    print("initial loading starts ")
     flows, bush_flows, topological_orders, links_in_bush = __initial_loading(
         network, demand, tolls
     )
