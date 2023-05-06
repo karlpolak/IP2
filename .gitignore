@@ -168,3 +168,10 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+QGIS/pies/
+STA_prep/shapefile_data/radius_*.cpg
+STA_prep/shapefile_data/radius_*.dbf
+STA_prep/shapefile_data/radius_*.prj
+STA_prep/shapefile_data/radius_*.shp
+STA_prep/shapefile_data/radius_*.shx
+
