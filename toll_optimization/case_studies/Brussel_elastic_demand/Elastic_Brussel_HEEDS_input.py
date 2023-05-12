@@ -1,7 +1,9 @@
 import sys
 sys.path.append("../../..")
+import os
 import numpy as np
 import pandas as pd
+import geopandas as gpd
 from dyntapy.assignments import StaticAssignment
 from dyntapy.toll import create_toll_object
 from dyntapy.demand_data import od_graph_from_matrix
@@ -9,15 +11,21 @@ from pickle import load
 import warnings
 warnings.filterwarnings('ignore') # hide warnings
 
+HERE = os.path.dirname(os.path.realpath("__file__"))
+data_path = HERE + os.path.sep + os.pardir + os.path.sep + os.pardir + os.path.sep + 'data_map'
+links_crossing_cordon = gpd.read_file(data_path  + os.path.sep + 'QGIS' + os.path.sep + "links_crossing_cordon.shp")
+links_in_cordon = gpd.read_file(data_path  + os.path.sep + 'QGIS' + os.path.sep + "links_in_cordon.shp")
+
 # 4 PARAMETERS YOU SHOULD FILL IN YOURSELF, DEPENDING ON YOUR NEEDS
 # 1) CITY OF CASE STUDY
 city = 'BRUSSEL'
 # 2) CONSIDERED RADIUS/BUFFER OF NETWORK 
 buffer = 40
 # 3) LINK IDS OF NETWORK THAT YOU WOULD LIKE TO TOLL 
-toll_ids = [1490]
+# TODO nog testen, maar zou moeten kloppen
+toll_ids = links_crossing_cordon['link_id']
 # 4) TOLLING METHOD THAT YOU WOULD LIKE TO SET: single/cordon/zone
-toll_method = 'single'
+toll_method = 'cordon'
 
 # INPUT FROM HEEDS: TOLL VALUE
 toll_value = 0
