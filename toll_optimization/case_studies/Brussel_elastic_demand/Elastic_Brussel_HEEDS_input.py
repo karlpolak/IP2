@@ -1,6 +1,5 @@
 import sys
 sys.path.append("../../..")
-import os
 import numpy as np
 import pandas as pd
 import geopandas as gpd
@@ -11,32 +10,27 @@ from pickle import load
 import warnings
 warnings.filterwarnings('ignore') # hide warnings
 
-HERE = os.path.dirname(os.path.realpath("__file__"))
-data_path = HERE + os.path.sep + os.pardir + os.path.sep + os.pardir + os.path.sep + 'data_map'
-links_crossing_cordon = gpd.read_file(data_path  + os.path.sep + 'QGIS' + os.path.sep + "links_crossing_cordon.shp")
-links_in_cordon = gpd.read_file(data_path  + os.path.sep + 'QGIS' + os.path.sep + "links_in_cordon.shp")
+# ------------------------------------ CHANGE TO YOUR NEEDS AND FILES: START -------------------------------------
 
-# 4 PARAMETERS YOU SHOULD FILL IN YOURSELF, DEPENDING ON YOUR NEEDS
-# 1) CITY OF CASE STUDY
-city = 'BRUSSEL'
-# 2) CONSIDERED RADIUS/BUFFER OF NETWORK 
-buffer = 40
-# 3) LINK IDS OF NETWORK THAT YOU WOULD LIKE TO TOLL 
-# TODO nog testen, maar zou moeten kloppen
-toll_ids = links_crossing_cordon['link_id']
-# 4) TOLLING METHOD THAT YOU WOULD LIKE TO SET: single/cordon/zone
-toll_method = 'cordon'
-
-# INPUT FROM HEEDS: TOLL VALUE
-toll_value = 0
-
-# Load network, original/starting OD, A_matrix and B_matrix 
+# 0) Specify file paths for network, original OD-matrix, A & B matrix, and coordinates of the centroids
 network_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/network_with_centroids/inelastic_BRUSSEL_40"
 od_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/od_graph/elastic_BRUSSEL_40.xlsx"
 A_matrix_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elastic/A_matrix_BRUSSEL_40"
 B_matrix_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elastic/B_matrix_BRUSSEL_40"
 x_centroids_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elastic/x_centroids_BRUSSEL_40"
 y_centroids_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elastic/y_centroids_BRUSSEL_40"
+# Either load links you like to toll, or add their link_ids in the list of toll_ids. 
+links_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elastic/links_crossing_cordon.shp"
+
+# 1) LINK IDS OF NETWORK THAT YOU WOULD LIKE TO TOLL 
+links_crossing_cordon = gpd.read_file(links_path)
+toll_ids = links_crossing_cordon['link_id']
+# 2) TOLLING METHOD THAT YOU WOULD LIKE TO SET: single/cordon/zone
+toll_method = 'cordon'
+# ------------------------------------ CHANGE TO YOUR NEEDS AND FILES: END -------------------------------------
+
+# INPUT FROM HEEDS: TOLL VALUE
+toll_value = 0
 
 with open(network_path, 'rb') as network_file:
     g = load(network_file)
