@@ -25,8 +25,11 @@ toll_value = 0
 # Load network, original/starting OD, A_matrix and B_matrix 
 network_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/network_with_centroids/inelastic_BRUSSEL_40"
 od_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/od_graph/elastic_BRUSSEL_40.xlsx"
-A_matrix_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elasticity/A_matrix_BRUSSEL_40"
-B_matrix_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elasticity/B_matrix_BRUSSEL_40"
+A_matrix_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elastic/A_matrix_BRUSSEL_40"
+B_matrix_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elastic/B_matrix_BRUSSEL_40"
+x_centroids_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elastic/x_centroids_BRUSSEL_40"
+y_centroids_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elastic/y_centroids_BRUSSEL_40"
+
 with open(network_path, 'rb') as network_file:
     g = load(network_file)
 with open(A_matrix_path, 'rb') as matrix:
@@ -35,6 +38,8 @@ with open(B_matrix_path, 'rb') as matrix:
     B = load(matrix)
 original_od = pd.read_excel(od_path)
 original_od = original_od.to_numpy()
+x_centroids = np.loadtxt(x_centroids_path)
+y_centroids = np.loadtxt(y_centroids_path)
 original_od_graph = od_graph_from_matrix(original_od,x_centroids,y_centroids) 
 
 
