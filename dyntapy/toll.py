@@ -31,7 +31,7 @@ class Toll:
             for id in self.link_ids:
                     toll_costs[id] = self.values * internal_network.links.length[id]
         else:  
-            if type(self.values) == int:
+            if type(self.values) == int or type(self.values) == float:
                 for id in self.link_ids:
                     toll_costs[id] = self.values
             else: 
