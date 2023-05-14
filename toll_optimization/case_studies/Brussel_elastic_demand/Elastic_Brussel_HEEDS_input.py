@@ -13,7 +13,7 @@ warnings.filterwarnings('ignore') # hide warnings
 # ------------------------------------ CHANGE TO YOUR NEEDS AND FILES: START -------------------------------------
 
 # 0) Specify file paths for network, original OD-matrix, A & B matrix, and coordinates of the centroids
-network_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/network_with_centroids/inelastic_BRUSSEL_40"
+network_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/network_with_centroids/elastic_BRUSSEL_40"
 od_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/od_graph/elastic_BRUSSEL_40.xlsx"
 A_matrix_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elastic/A_matrix_BRUSSEL_40"
 B_matrix_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elastic/B_matrix_BRUSSEL_40"
@@ -25,6 +25,7 @@ links_path = "C:/Users/anton/IP2/toll_optimization/data_map/HEEDS_input/elastic/
 # 1) LINK IDS OF NETWORK THAT YOU WOULD LIKE TO TOLL 
 links_crossing_cordon = gpd.read_file(links_path)
 toll_ids = links_crossing_cordon['link_id']
+toll_link_ids = [toll_id for toll_id in toll_ids]
 # 2) TOLLING METHOD THAT YOU WOULD LIKE TO SET: single/cordon/zone
 toll_method = 'cordon'
 # ------------------------------------ CHANGE TO YOUR NEEDS AND FILES: END -------------------------------------
@@ -44,9 +45,8 @@ x_centroids = np.loadtxt(x_centroids_path)
 y_centroids = np.loadtxt(y_centroids_path)
 original_od_graph = od_graph_from_matrix(original_od,x_centroids,y_centroids) 
 
-
 # First assignment with toll to achieve new OD 
-toll_object = create_toll_object(g, toll_method, toll_ids, toll_value)
+toll_object = create_toll_object(g, toll_method, toll_link_ids, toll_value)
 assignment = StaticAssignment(g, original_od_graph, toll_object)
 result = assignment.run('dial_b')
 new_od = (A-result.skim)/B
