@@ -39,11 +39,11 @@ with open(A_matrix_path, 'rb') as matrix:
     A = load(matrix)
 with open(B_matrix_path, 'rb') as matrix:
     B = load(matrix)
-original_od = pd.read_excel(od_path)
-original_od = original_od.to_numpy()
+old_od = pd.read_excel(od_path)
+old_od = old_od.to_numpy()
 x_centroids = np.loadtxt(x_centroids_path)
 y_centroids = np.loadtxt(y_centroids_path)
-original_od_graph = od_graph_from_matrix(original_od,x_centroids,y_centroids) 
+original_od_graph = od_graph_from_matrix(old_od,x_centroids,y_centroids) 
 
 # First assignment with toll to achieve new OD 
 toll_object = create_toll_object(g, toll_method, toll_link_ids, toll_value)
