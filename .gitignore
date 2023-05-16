@@ -6,6 +6,16 @@ STA_prep/od_matrix_data/full_matrices/
 STA_prep/network_data/
 STA_prep/Verplaatsingen_bestuurder_uur_spmVlaanderenVersie4.2.2_2017.CSV
 
+# STA_prep 
+STA_prep/shapefile_data/radius_*.cpg
+STA_prep/shapefile_data/radius_*.dbf
+STA_prep/shapefile_data/radius_*.prj
+STA_prep/shapefile_data/radius_*.shp
+STA_prep/shapefile_data/radius_*.shx
+
+# irrelevant QGIS
+QGIS/pies/
+
 # data and plotting files
 demand_plot_*
 network_plot_*
@@ -168,10 +178,3 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-QGIS/pies/
-STA_prep/shapefile_data/radius_*.cpg
-STA_prep/shapefile_data/radius_*.dbf
-STA_prep/shapefile_data/radius_*.prj
-STA_prep/shapefile_data/radius_*.shp
-STA_prep/shapefile_data/radius_*.shx
-
